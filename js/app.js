@@ -46,6 +46,27 @@ class UI {
             divMensaje.remove();
         }, 5000);
     }
+
+    imprimirCitas({citas}) {
+        citas.forEach(cita => {
+            const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
+
+            const divCita = document.createElement('div');
+            divCita.classList.add('cita', 'p-3');
+            divCita.dataset.id = id;
+
+            //Scripting
+            const mascotaP = document.createElement('h2');
+            mascotaP.classList.add('card-title', 'font-weight-bolder');
+            mascotaP.textContent = mascota;
+            
+            //Agregar al div
+            divCita.appendChild(mascotaP);
+
+            //Insertar al dom
+            contenedorCitas.appendChild(divCita);
+        });
+    }
 }
 
 //Instancia
@@ -105,6 +126,8 @@ function nuevaCita(e) {
 
     //Reiniciar objeto cita
     reiniciarCita();
+
+    ui.imprimirCitas(adminCitas);
 }
 
 function reiniciarCita() {
