@@ -100,5 +100,18 @@ function nuevaCita(e) {
     //Agregando cita
     adminCitas.agregarCita({...citaObj}); //Pasar copia de objeto
 
-    console.log(adminCitas.citas);
+    //Reiniciar form
+    formulario.reset();
+
+    //Reiniciar objeto cita
+    reiniciarCita();
+}
+
+function reiniciarCita() {
+    citaObj.mascota = '';
+    citaObj.propietario = '';
+    citaObj.telefono = '';
+    citaObj.fecha = '';
+    citaObj.hora = '';
+    citaObj.sintomas = '';
 }
