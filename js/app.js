@@ -16,6 +16,10 @@ class Citas {
     constructor() {
         this.citas = [];
     }
+
+    agregarCita(cita) {
+        this.citas = [...this.citas, cita];
+    }
 }
 
 class UI {
@@ -89,4 +93,12 @@ function nuevaCita(e) {
 
         return;
     }
+
+    //Asignando ID unico
+    citaObj.id = Date.now();
+
+    //Agregando cita
+    adminCitas.agregarCita({...citaObj}); //Pasar copia de objeto
+
+    console.log(adminCitas.citas);
 }
