@@ -48,6 +48,8 @@ class UI {
     }
 
     imprimirCitas({citas}) {
+        this.limpiarHTML();
+
         citas.forEach(cita => {
             const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
 
@@ -59,13 +61,49 @@ class UI {
             const mascotaP = document.createElement('h2');
             mascotaP.classList.add('card-title', 'font-weight-bolder');
             mascotaP.textContent = mascota;
+
+            const propietarioP = document.createElement('p');
+            propietarioP.innerHTML = `
+                <span class="font-weight-bolder">Propietario: </span> ${propietario}
+            `;
+
+            const telefonoP = document.createElement('p');
+            telefonoP.innerHTML = `
+                <span class="font-weight-bolder">Teléfono: </span> ${telefono}
+            `;
+
+            const fechaP = document.createElement('p');
+            fechaP.innerHTML = `
+                <span class="font-weight-bolder">Fecha: </span> ${fecha}
+            `;
+
+            const horaP = document.createElement('p');
+            horaP.innerHTML = `
+                <span class="font-weight-bolder">Hora: </span> ${hora}
+            `;
+
+            const sintomasP = document.createElement('p');
+            sintomasP.innerHTML = `
+                <span class="font-weight-bolder">Sintomas: </span> ${sintomas}
+            `;
             
             //Agregar al div
             divCita.appendChild(mascotaP);
+            divCita.appendChild(propietarioP);
+            divCita.appendChild(telefonoP);
+            divCita.appendChild(fechaP);
+            divCita.appendChild(horaP);
+            divCita.appendChild(sintomasP);
 
             //Insertar al dom
             contenedorCitas.appendChild(divCita);
         });
+    }
+
+    limpiarHTML() {
+        while(contenedorCitas.firstChild) {
+            contenedorCitas.firstChild.remove();
+        }
     }
 }
 
