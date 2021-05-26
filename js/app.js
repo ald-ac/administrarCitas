@@ -20,6 +20,10 @@ class Citas {
     agregarCita(cita) {
         this.citas = [...this.citas, cita];
     }
+
+    eliminarCita(idCita) {
+        this.citas = this.citas.filter(cita => cita.id !== idCita);
+    } 
 }
 
 class UI {
@@ -189,5 +193,10 @@ function reiniciarCita() {
 }
 
 function eliminarCita(id) {
-    
+    //Remover de citas
+    adminCitas.eliminarCita(id);
+    //Notificar
+    ui.imprimirAlerta('Cita eliminada correctamente');
+    //Refrescar HTML    
+    ui.imprimirCitas(adminCitas);
 }
