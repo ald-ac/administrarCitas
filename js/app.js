@@ -26,6 +26,11 @@ class Citas {
     eliminarCita(idCita) {
         this.citas = this.citas.filter(cita => cita.id !== idCita);
     } 
+
+    editarCita(citaMod) {
+        //Iterar en cada cita, cuando se encuentre una bajo la condicion cambiar esa por la nueva modificada
+        this.citas = this.citas.map( cita => cita.id === citaMod.id ? citaMod : cita);
+    }
 }
 
 class UI {
@@ -181,7 +186,7 @@ function nuevaCita(e) {
 
     if(editando) {
         //Actualizar cita
-
+        adminCitas.editarCita({...citaObj});
         //Btn original
         formulario.querySelector('button[type="submit"]').textContent = 'Crear cita';
 
