@@ -1,6 +1,12 @@
+import Cita from './classes/cita.js';
+import UI from './classes/ui.js';
+
+import { mascotaInput, propietarioInput, telefonoInput,
+    fechaInput, horaInput, sintomasInput, formulario} from './selectores.js';
+
 //Instancia
 const ui = new UI();
-const adminCitas = new Citas();
+const adminCitas = new Cita();
 
 let editando;
 
