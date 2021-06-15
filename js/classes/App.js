@@ -1,6 +1,7 @@
 import { datosCita, nuevaCita } from '../funciones.js';
 import { mascotaInput, propietarioInput, telefonoInput,
     fechaInput, horaInput, sintomasInput, formulario } from '../selectores.js';
+import { crearDB } from '../operacionesDB.js';
 
 class App {
     constructor() {
@@ -17,6 +18,9 @@ class App {
 
         //Formulario nueva cita
         formulario.addEventListener('submit', nuevaCita);
+
+        //Crear la base de datos
+        crearDB();
     }
 }
 
