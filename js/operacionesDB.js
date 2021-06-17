@@ -1,3 +1,4 @@
+import { ui } from './funciones.js';
 let DB;
 
 export function crearDB() {
@@ -13,6 +14,9 @@ export function crearDB() {
     crearDB.onsuccess = function() {
         
         DB = crearDB.result;
+
+        //Imprimir en HTML las citas de la BD si tiene
+        leerCitasBD();
     }
 
     //Definir estructura
@@ -32,5 +36,30 @@ export function crearDB() {
         objectStore.createIndex('hora', 'hora', { unique: false });
         objectStore.createIndex('sintomas', 'sintomas', { unique: false });
         objectStore.createIndex('id', 'id', { unique: true });
+    }
+}
+
+export function agregarCitaBD(citaObj) {
+
+    //Insertar registro en indexDB
+    const transaction = DB.transaction(['citas'], 'readwrite');
+
+    const objectStore = transaction.objectStore('citas');
+
+    objectStore.add(citaObj);
+
+    transaction.oncomplete = function() {
+        ui.imprimirAlerta('Se agrego correctamente');
+    }
+}
+
+export function leerCitasBD() {
+    //Leer datos de la BD
+    const objectStore = DB.transaction(['citas']).objectStore('citas');
+        
+    ui.limpiarHTML();
+
+    objectStore.openCursor().onsuccess = function(e) {
+        ui.imprimirCitas(e.target.result);
     }
 }

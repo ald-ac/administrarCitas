@@ -1,11 +1,12 @@
 import Cita from './classes/cita.js';
 import UI from './classes/ui.js';
+import { agregarCitaBD, leerCitasBD } from './operacionesDB.js';
 
 import { mascotaInput, propietarioInput, telefonoInput,
     fechaInput, horaInput, sintomasInput, formulario} from './selectores.js';
 
 //Instancia
-const ui = new UI();
+export const ui = new UI();
 const adminCitas = new Cita();
 
 let editando;
@@ -57,8 +58,8 @@ export function nuevaCita(e) {
         //Agregando cita
         adminCitas.agregarCita({...citaObj}); //Pasar copia de objeto
 
-        //Notificar accion
-        ui.imprimirAlerta('Se agrego correctamente');
+        //Insertar cita en la indexDB
+        agregarCitaBD(citaObj);
     }
 
     //Reiniciar form
@@ -67,7 +68,7 @@ export function nuevaCita(e) {
     //Reiniciar objeto cita
     reiniciarCita();
 
-    ui.imprimirCitas(adminCitas);
+    leerCitasBD();
 }
 
 export function reiniciarCita() {
@@ -85,7 +86,7 @@ export function eliminarCita(id) {
     //Notificar
     ui.imprimirAlerta('Cita eliminada correctamente');
     //Refrescar HTML    
-    ui.imprimirCitas(adminCitas);
+    leerCitasBD();
 }
 
 //Cargar modo edicion
