@@ -53,9 +53,6 @@ export function nuevaCita(e) {
         //Asignando ID unico
         citaObj.id = Date.now();
 
-        //Agregando cita
-        adminCitas.agregarCita({...citaObj}); //Pasar copia de objeto
-
         //Insertar cita en la indexDB
         agregarCitaBD(citaObj);
     }
