@@ -1,4 +1,3 @@
-import Cita from './classes/Citas.js';
 import UI from './classes/Ui.js';
 import { agregarCitaBD, leerCitasBD, editarCitasBD, eliminarCitasBD } from './operacionesDB.js';
 
@@ -7,7 +6,6 @@ import { mascotaInput, propietarioInput, telefonoInput,
 
 //Instancia
 export const ui = new UI();
-const adminCitas = new Cita();
 
 let editando;
 
@@ -41,8 +39,6 @@ export function nuevaCita(e) {
     }
 
     if(editando) {
-        //Actualizar cita
-        adminCitas.editarCita({...citaObj});
         
         //Editar en indexDB
         editarCitasBD(citaObj);
@@ -83,8 +79,6 @@ export function reiniciarCita() {
 }
 
 export function eliminarCita(id) {
-    //Remover de citas
-    adminCitas.eliminarCita(id);
 
     //Eliminar cita de BD
     eliminarCitasBD(id);
