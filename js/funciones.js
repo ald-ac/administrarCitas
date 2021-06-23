@@ -1,6 +1,6 @@
-import Cita from './classes/cita.js';
-import UI from './classes/ui.js';
-import { agregarCitaBD, leerCitasBD } from './operacionesDB.js';
+import Cita from './classes/Citas.js';
+import UI from './classes/Ui.js';
+import { agregarCitaBD, leerCitasBD, editarCitasBD } from './operacionesDB.js';
 
 import { mascotaInput, propietarioInput, telefonoInput,
     fechaInput, horaInput, sintomasInput, formulario} from './selectores.js';
@@ -43,14 +43,16 @@ export function nuevaCita(e) {
     if(editando) {
         //Actualizar cita
         adminCitas.editarCita({...citaObj});
+        
+        //Editar en indexDB
+        editarCitasBD(citaObj);
+
         //Btn original
         formulario.querySelector('button[type="submit"]').textContent = 'Crear cita';
 
-        //Notificar accion
-        ui.imprimirAlerta('Se modificó correctamente');
-
         //reiniciar editando
         editando = false;
+        
     } else {
         //Asignando ID unico
         citaObj.id = Date.now();

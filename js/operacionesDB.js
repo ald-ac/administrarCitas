@@ -63,3 +63,23 @@ export function leerCitasBD() {
         ui.imprimirCitas(e.target.result);
     }
 }
+
+export function editarCitasBD(citaObj) {
+
+    //Editar informacion de la BD
+    const transaction = DB.transaction(['citas'], 'readwrite');
+
+    const objectStore = transaction.objectStore('citas');
+
+    //Editar con PUT
+    objectStore.put(citaObj);
+
+    transaction.oncomplete = function() {
+        //Notificar accion
+        ui.imprimirAlerta('Se modificó correctamente');
+    }
+
+    transaction.onerror = () => {
+        console.log('Hubo un error');
+    }
+}
