@@ -6,12 +6,12 @@ export function crearDB() {
     const crearDB = window.indexedDB.open('citas', 1);
 
     //error
-    crearDB.onerror = function() {
+    crearDB.onerror = () => {
         console.log('Hubo un error en la creacion de la DB');
     }
 
     //creada correctamente
-    crearDB.onsuccess = function() {
+    crearDB.onsuccess = () => {
         
         DB = crearDB.result;
 
@@ -20,7 +20,7 @@ export function crearDB() {
     }
 
     //Definir estructura
-    crearDB.onupgradeneeded = function(e) {
+    crearDB.onupgradeneeded = (e) => {
         const db = e.target.result;
 
         const objectStore = db.createObjectStore('citas', {
@@ -48,7 +48,7 @@ export function agregarCitaBD(citaObj) {
 
     objectStore.add(citaObj);
 
-    transaction.oncomplete = function() {
+    transaction.oncomplete = () => {
         ui.imprimirAlerta('Se agrego correctamente');
     }
 }
@@ -59,14 +59,14 @@ export function leerCitasBD() {
         
     ui.limpiarHTML();
 
-    objectStore.openCursor().onsuccess = function(e) {
+    objectStore.openCursor().onsuccess = (e) => {
         ui.imprimirCitas(e.target.result);
     }
 }
 
 export function editarCitasBD(citaObj) {
 
-    //Editar informacion de la BD
+    //Editar informacion en la BD
     const transaction = DB.transaction(['citas'], 'readwrite');
 
     const objectStore = transaction.objectStore('citas');
@@ -74,7 +74,7 @@ export function editarCitasBD(citaObj) {
     //Editar con PUT
     objectStore.put(citaObj);
 
-    transaction.oncomplete = function() {
+    transaction.oncomplete = () => {
         //Notificar accion
         ui.imprimirAlerta('Se modificó correctamente');
     }
@@ -82,4 +82,26 @@ export function editarCitasBD(citaObj) {
     transaction.onerror = () => {
         console.log('Hubo un error');
     }
+}
+
+export function eliminarCitasBD(id) {
+
+    const transaction = DB.transaction(['citas'], 'readwrite');
+
+    const objectStore = transaction.objectStore('citas');
+
+    //Eliminar registro con su ID
+    objectStore.delete(id);
+
+    transaction.oncomplete = () => {
+        //Notificar
+        ui.imprimirAlerta('Cita eliminada correctamente');
+    }
+
+    transaction.onerror = () => {
+        console.log('Hubo un error');
+    }
+
+    //Releer BD e imprimir citas
+    leerCitasBD();
 }

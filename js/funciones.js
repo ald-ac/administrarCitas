@@ -1,6 +1,6 @@
 import Cita from './classes/Citas.js';
 import UI from './classes/Ui.js';
-import { agregarCitaBD, leerCitasBD, editarCitasBD } from './operacionesDB.js';
+import { agregarCitaBD, leerCitasBD, editarCitasBD, eliminarCitasBD } from './operacionesDB.js';
 
 import { mascotaInput, propietarioInput, telefonoInput,
     fechaInput, horaInput, sintomasInput, formulario} from './selectores.js';
@@ -52,7 +52,7 @@ export function nuevaCita(e) {
 
         //reiniciar editando
         editando = false;
-        
+
     } else {
         //Asignando ID unico
         citaObj.id = Date.now();
@@ -85,10 +85,9 @@ export function reiniciarCita() {
 export function eliminarCita(id) {
     //Remover de citas
     adminCitas.eliminarCita(id);
-    //Notificar
-    ui.imprimirAlerta('Cita eliminada correctamente');
-    //Refrescar HTML    
-    leerCitasBD();
+
+    //Eliminar cita de BD
+    eliminarCitasBD(id);
 }
 
 //Cargar modo edicion
